@@ -4,12 +4,15 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 
 class Activity2 : AppCompatActivity() {
 
     private lateinit var button2: Button
     private lateinit var buttonStop2: Button
+
+    private lateinit var textViewActivity2: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +33,8 @@ class Activity2 : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
+        textViewActivity2 = findViewById(R.id.textView2)
+
         button2 = findViewById(R.id.button2)
         button2.setOnClickListener {
             val intent = Intent(this, Activity3::class.java)
@@ -40,6 +45,9 @@ class Activity2 : AppCompatActivity() {
         buttonStop2.setOnClickListener {
             stopService(Intent(this, MyService::class.java))
         }
+
+        val contatos = BuscaContato.lerContatos(this)
+        textViewActivity2.text = contatos.get(1).toString()
     }
 
 }

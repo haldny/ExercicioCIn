@@ -1,5 +1,6 @@
 package com.haldny.exerciciocin
 
+import android.app.ActivityManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -10,12 +11,15 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var button: Button
     private lateinit var buttonStop: Button
+
+    private lateinit var textViewActivity1: TextView
 
     private lateinit var broadcast: BroadcastReceiver
 
@@ -43,6 +47,8 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
+        textViewActivity1 = findViewById(R.id.textView)
+
         button = findViewById(R.id.button)
         button.setOnClickListener {
             val intent = Intent(this, Activity2::class.java)
@@ -54,19 +60,22 @@ class MainActivity : AppCompatActivity() {
             stopService(Intent(this, MyService::class.java))
         }
 
-        val filter = IntentFilter()
-        filter.addAction(Intent.ACTION_SCREEN_OFF)
-        filter.addAction(Intent.ACTION_SCREEN_ON)
+        registerReceiver(broadcast, IntentFilter(Intent.ACTION_SCREEN_OFF))
+        registerReceiver(broadcast, IntentFilter(Intent.ACTION_SCREEN_ON))
 
-        registerReceiver(broadcast, filter)
+        registerReceiver(broadcastWifi, IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION))
 
-        val filterWifi = IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION)
-        registerReceiver(broadcastWifi, filterWifi)
+        val contatos = BuscaContato.lerContatos(this)
 
-        val contatos = lerContatos()
+        textViewActivity1.text = contatos.get(0).toString()
+
         contatos.forEach {
             Log.d("Turma22", "Contato encontrado foi: $it")
         }
+
+        val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+
+        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE)
     }
 
     override fun onStop() {
@@ -106,38 +115,6 @@ class MainActivity : AppCompatActivity() {
                 Log.d("Turma22", "O estado do Wi-Fi nao mudou")
             }
         }
-    }
-
-    private fun lerContatos() : List<Contato> {
-        val cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI,
-                null, null, null,
-                ContactsContract.Contacts.DISPLAY_NAME)
-
-        val indexID = cursor?.getColumnIndex(ContactsContract.Contacts._ID)
-
-        val indexPhone = cursor?.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)
-
-        val indexName = cursor?.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
-
-        val contatos = mutableListOf<Contato>()
-
-        while (cursor?.moveToNext() == true) {
-            val id = indexID?.let { cursor?.getString(it) }
-            val name = indexName?.let { cursor?.getString(it) }
-
-            val phones = indexPhone?.let { cursor?.getString(it) }
-            val phoneCount = phones?.toInt() ?: 0
-            if (phoneCount > 0) {
-                //TODO: Get Phones
-            }
-
-            val contato = Contato(id, name, listOf())
-            contatos.add(contato)
-        }
-
-        cursor?.close()
-
-        return contatos
     }
 
 }
