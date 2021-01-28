@@ -72,10 +72,6 @@ class MainActivity : AppCompatActivity() {
         contatos.forEach {
             Log.d("Turma22", "Contato encontrado foi: $it")
         }
-
-        val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-
-        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE)
     }
 
     override fun onStop() {
