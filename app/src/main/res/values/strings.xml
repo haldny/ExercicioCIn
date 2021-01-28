@@ -12,4 +12,8 @@
 
     <string name="button_stop_service">Stop Service</string>
 
+    <string name="button_enable">Habilitar</string>
+
+    <string name="button_disable">Desabilitar</string>
+
 </resources>

@@ -6,6 +6,7 @@ import android.provider.ContactsContract
 object BuscaContato {
 
     fun lerContatos(context: Context) : List<Contato> {
+
         val cursor = context.contentResolver.query(ContactsContract.Contacts.CONTENT_URI,
                 null, null, null,
                 ContactsContract.Contacts.DISPLAY_NAME)

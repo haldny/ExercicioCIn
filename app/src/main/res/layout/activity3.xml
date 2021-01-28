@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,7 +21,7 @@
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="30dp"
         android:text="@string/button_start_activity4"
         app:layout_constraintBottom_toTopOf="@+id/button_stop3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,10 +31,30 @@
         android:id="@+id/button_stop3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="200dp"
+        android:layout_marginBottom="30dp"
         android:text="@string/button_stop_service"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button_disable"
         app:layout_constraintEnd_toEndOf="@+id/button3"
         app:layout_constraintStart_toStartOf="@+id/button3" />
+
+    <Button
+        android:id="@+id/button_disable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="@string/button_disable"
+        app:layout_constraintBottom_toTopOf="@+id/button_enable"
+        app:layout_constraintEnd_toEndOf="@+id/button_stop3"
+        app:layout_constraintStart_toStartOf="@+id/button_stop3" />
+
+    <Button
+        android:id="@+id/button_enable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:text="@string/button_enable"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/button_disable"
+        app:layout_constraintStart_toStartOf="@+id/button_disable" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
