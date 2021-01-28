@@ -15,5 +15,6 @@
     <string name="button_enable">Habilitar</string>
 
     <string name="button_disable">Desabilitar</string>
+    <string name="button_show_battery">Mostrar Valor da Bateria</string>
 
 </resources>
